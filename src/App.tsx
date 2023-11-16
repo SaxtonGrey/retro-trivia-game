@@ -26,7 +26,9 @@ function App() {
     // Update the user's selected answer for the current question
     setQuestions((prevQuestions) =>
       prevQuestions.map((question, index) =>
-        index === questionIndex ? { ...question, userSelectedAnswer: selectedAnswer } : question
+        index === questionIndex
+          ? { ...question, userSelectedAnswer: selectedAnswer }
+          : question
       )
     );
   };
@@ -52,24 +54,32 @@ function App() {
       <div>
         {questions.length > 0 && questionIndex < questions.length && (
           <div>
-            <p dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }} />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: questions[questionIndex].question,
+              }}
+            />
             <div>
-              {[...questions[questionIndex].incorrect_answers, questions[questionIndex].correct_answer].map(
-                (answer, answerIndex) => (
-                  <button
-                    key={answerIndex}
-                    onClick={() => handleAnswerSelection(answer)}
-                    dangerouslySetInnerHTML={{ __html: answer }}
-                  />
-                )
-              )}
+              {[
+                ...questions[questionIndex].incorrect_answers,
+                questions[questionIndex].correct_answer,
+              ].map((answer, answerIndex) => (
+                <button
+                  key={answerIndex}
+                  onClick={() => handleAnswerSelection(answer)}
+                  dangerouslySetInnerHTML={{ __html: answer }}
+                />
+              ))}
             </div>
           </div>
         )}
         <p>Current Score: {score} </p>
-        <button onClick={() => {
-          handleCheckAnswer();
-        }} disabled={questionIndex === questions.length - 1}>
+        <button
+          onClick={() => {
+            handleCheckAnswer();
+          }}
+          disabled={questionIndex === questions.length - 1}
+        >
           Next Question
         </button>
       </div>
