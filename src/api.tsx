@@ -30,12 +30,14 @@ export const Requests = {
     while (retries < maxRetries) {
       try {
         const response = await fetch(
-          `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}`
+          difficulty === 'mixed'
+          ? `${baseUrl}amount=${limit}&type=${type}`
+          : `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}`
         );
 
         if (response.status === 429) {
           // If rate-limited, wait for a while and then retry
-          await new Promise((resolve) => setTimeout(resolve, 5000)); // Adjust the delay as needed
+          await new Promise((resolve) => setTimeout(resolve, 1000)); // Adjust the delay as needed
           retries++;
         } else {
           const data: TriviaResponse = await response.json();
