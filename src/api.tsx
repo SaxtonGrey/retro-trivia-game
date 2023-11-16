@@ -15,9 +15,6 @@ interface TriviaResponse {
 
 const baseUrl = "https://opentdb.com/api.php?";
 
-
-
-
 export const Requests = {
   getQuestions: async (
     limit: number,

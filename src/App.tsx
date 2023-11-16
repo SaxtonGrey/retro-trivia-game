@@ -112,10 +112,12 @@ function App() {
           onClick={() => {
             handleCheckAnswer();
           }}
+
           disabled={
             questionIndex === questions.length - 1 ||
             !questions[questionIndex]?.userSelectedAnswer
           }
+          disabled={questionIndex === questions.length - 1}
         >
           Next Question
         </button>
