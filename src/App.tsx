@@ -30,11 +30,14 @@ function App() {
         <p>hello World</p>
         {questions.map((question, index) => (
           <div key={index}>
-            <p>{question.question}</p>
+            <p dangerouslySetInnerHTML={{ __html: question.question }} />
             <ul>
               {[...question.incorrect_answers, question.correct_answer].map(
                 (answer, answerIndex) => (
-                  <li key={answerIndex}>{answer}</li>
+                  <li
+                    key={answerIndex}
+                    dangerouslySetInnerHTML={{ __html: answer }}
+                  />
                 )
               )}
             </ul>
