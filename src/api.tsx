@@ -1,6 +1,5 @@
 import { TriviaQuestion, TriviaResponse } from "./types/interfaces";
 
-
 const baseUrl = "https://opentdb.com/api.php?";
 
 export const Requests = {
@@ -15,9 +14,9 @@ export const Requests = {
     while (retries < maxRetries) {
       try {
         const response = await fetch(
-          difficulty === 'mixed'
-          ? `${baseUrl}amount=${limit}&type=${type}`
-          : `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}`
+          difficulty === "mixed"
+            ? `${baseUrl}amount=${limit}&type=${type}`
+            : `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}`
         );
 
         if (response.status === 429) {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Requests } from "../api";
-import { TriviaQuestion } from "../api";
+import { TriviaQuestion } from "../types/interfaces";
 import "../App.css";
 
 function GameFlow() {
