@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -7,7 +7,29 @@
     <title>Vite + React + TS</title>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root-container">
+      <div id="root"></div>
+      <div id="controls-container">
+        <div class="dpad">
+          <div><i class="fa-regular fa-square-caret-up"></i></div>
+          <div><i class="fa-regular fa-square-caret-right"></i></div>
+          <div><i class="fa-regular fa-square-caret-left"></i></div>
+          <div><i class="fa-regular fa-square-caret-down"></i></div>
+        </div>
+        <div class="start-select-btns">
+          <div>start</div>
+          <div>select</div>
+        </div>
+        <div class="a-b-btns">
+          <div>A</div>
+          <div>B</div>
+        </div>
+      </div>
+    </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script
+      src="https://kit.fontawesome.com/3dd79392ee.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>

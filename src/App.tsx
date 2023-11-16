@@ -44,6 +44,8 @@ function App() {
     );
   };
 
+  // We can only do 50 questions so lets make the multiplier double the points
+  // if the answer is submitted before the timer is up; max score will be 100
   const calculateMultiplier = () => {
     const quickMultiplier: number = 5;
     const calculatedMultiplier: number = timer / 8;
