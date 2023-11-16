@@ -1,13 +1,11 @@
 import { useEffect, useState } from "react";
 import { Requests } from "./api";
 import { TriviaQuestion } from "./api";
-import reactLogo from "./assets/react.svg";
-import viteLogo from "/vite.svg";
-import "./App.css";
 
 function App() {
-  const [count, setCount] = useState(0);
+  const [questionIndex, setQuestionIndex] = useState(0);
   const [questionLimit, setQuestionLimit] = useState(15);
+  const [score, setScore] = useState(0);
   const [difficulty, setDifficulty] = useState("easy");
   const [questionType, setQuestionType] = useState("multiple");
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
@@ -24,25 +22,56 @@ function App() {
       });
   }, []);
 
+  const handleAnswerSelection = (selectedAnswer: string) => {
+    // Update the user's selected answer for the current question
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((question, index) =>
+        index === questionIndex ? { ...question, userSelectedAnswer: selectedAnswer } : question
+      )
+    );
+  };
+
+  const handleCheckAnswer = () => {
+    // Check if the selected answer is correct and update the score
+    const selectedAnswer = questions[questionIndex].userSelectedAnswer;
+    const correctAnswer = questions[questionIndex].correct_answer;
+    console.log(selectedAnswer, correctAnswer);
+
+    if (selectedAnswer === correctAnswer) {
+      setScore((prevScore: number) => prevScore + 1);
+    }
+
+    // Move to the next question if available
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+  };
+
   return (
     <>
       <div>
-        <p>hello World</p>
-        {questions.map((question, index) => (
-          <div key={index}>
-            <p dangerouslySetInnerHTML={{ __html: question.question }} />
-            <ul>
-              {[...question.incorrect_answers, question.correct_answer].map(
+        {questions.length > 0 && questionIndex < questions.length && (
+          <div>
+            <p dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }} />
+            <div>
+              {[...questions[questionIndex].incorrect_answers, questions[questionIndex].correct_answer].map(
                 (answer, answerIndex) => (
-                  <li
+                  <button
                     key={answerIndex}
+                    onClick={() => handleAnswerSelection(answer)}
                     dangerouslySetInnerHTML={{ __html: answer }}
                   />
                 )
               )}
-            </ul>
+            </div>
           </div>
-        ))}
+        )}
+        <p>Current Score: {score} </p>
+        <button onClick={() => {
+          handleCheckAnswer();
+        }} disabled={questionIndex === questions.length - 1}>
+          Next Question
+        </button>
       </div>
     </>
   );
