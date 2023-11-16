@@ -154,7 +154,7 @@ body {
   .select-btn{
     position: absolute;
     left: 280px;
-    top: 325px;
+    top: 275px;
     rotate: 145deg;
   }
 
@@ -164,7 +164,7 @@ body {
     position: absolute;
     top: 50px;
     left: 290px;
-    top: 340px;
+    top: 300px;
     rotate: 325deg;
   }
 /* START BTN */
@@ -178,7 +178,7 @@ body {
   .start-btn{
     position: absolute;
     left: 390px;
-    top: 325px;
+    top: 275px;
     rotate: 145deg;
   }
 
@@ -188,7 +188,7 @@ body {
     position: absolute;
     top: 50px;
     left: 410px;
-    top: 340px;
+    top: 300px;
     rotate: 325deg;
   }
    /* A&B BTNS */
