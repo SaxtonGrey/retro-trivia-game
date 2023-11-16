@@ -12,6 +12,10 @@
   padding: 20px;
 }
 
+.selectedAnswer {
+  background-color: green;
+}
+
 #controls-container {
   display: flex;
   flex-direction: row;

@@ -11,6 +11,7 @@ function GameFlow() {
   const [questionType, setQuestionType] = useState("multiple");
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [timer, setTimer] = useState(10);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(null);
 
   useEffect(() => {
     Requests.getQuestions(questionLimit, difficulty, questionType)
@@ -33,7 +34,7 @@ function GameFlow() {
     return () => window.clearInterval(timerId);
   }, [timer]);
 
-  const handleAnswerSelection = (selectedAnswer: string) => {
+  const handleAnswerSelection = (selectedAnswer: string, answerIndex: number) => {
     // Update the user's selected answer for the current question
     setQuestions((prevQuestions) =>
       prevQuestions.map((question, index) =>
@@ -42,22 +43,46 @@ function GameFlow() {
           : question
       )
     );
+    setSelectedAnswerIndex(answerIndex)
   };
 
-  // We can only do 50 questions so lets make the multiplier double the points
-  // if the answer is submitted before the timer is up; max score will be 100
-  const calculateMultiplier = () => {
-    const quickMultiplier: number = 5;
-    const calculatedMultiplier: number = timer / 8;
-    const baseMultiplier: number = 1;
-    if (timer > 8) {
-      return quickMultiplier;
-    } else if (timer < 8 && timer > 1.6) {
-      return calculatedMultiplier * quickMultiplier;
-    } else {
-      return baseMultiplier;
+  
+  const calculateTimeBonus = () => {
+    if (timer >= 5) {
+      return 5;
+    } else if (timer === 4) {
+      return 4;
+    } else if (timer === 3) {
+      return 3
+    } else if (timer === 2) {
+      return 2
+    } else  {
+      return 1;
     }
   };
+
+  const difficultyPoints = () => {
+    const currentQuestion = questions[questionIndex];
+
+    // Issue with curDifficulty trying to access questions before they are fetched from the API.
+    if (!currentQuestion || !currentQuestion.difficulty) {
+      console.error("Invalid question or difficulty is missing");
+      return 0;
+    }
+
+    return calculatePoints(currentQuestion.difficulty);
+  }
+
+  const calculatePoints = (curDifficulty: string) => {
+    if (curDifficulty === "easy") {
+      return 3;
+    } else if (curDifficulty === "medium") {
+      return 4;
+    } else if (curDifficulty === "hard") {
+      return 5;
+    }
+    return 0;
+  }
 
   const handleCheckAnswer = () => {
     // Check if the selected answer is correct and update the score
@@ -65,24 +90,15 @@ function GameFlow() {
     const correctAnswer = questions[questionIndex].correct_answer;
 
     if (selectedAnswer === correctAnswer) {
-      const curDifficulty: string = questions[questionIndex].difficulty;
-      if (curDifficulty === "easy") {
-        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier());
-      }
-      if (curDifficulty === "medium") {
-        setScore(
-          (prevScore: number) => prevScore + 1.5 * calculateMultiplier()
-        );
-      }
-      if (curDifficulty === "hard") {
-        setScore((prevScore: number) => prevScore + 2 * calculateMultiplier());
-      }
+      const difficulty: number = difficultyPoints();
+      setScore((prevScore: number) => prevScore + difficulty * calculateTimeBonus())
     }
-    setTimer(10);
+    setSelectedAnswerIndex(null);
     // Move to the next question if available
     if (questionIndex < questions.length - 1) {
       setQuestionIndex((prevIndex) => prevIndex + 1);
     }
+    setTimer(10);
   };
 
   return (
@@ -102,7 +118,8 @@ function GameFlow() {
               ].map((answer, answerIndex) => (
                 <button
                   key={answerIndex}
-                  onClick={() => handleAnswerSelection(answer)}
+                  onClick={() => handleAnswerSelection(answer, answerIndex)}
+                  className={selectedAnswerIndex === answerIndex ? "selectedAnswer" : ""}
                   dangerouslySetInnerHTML={{ __html: answer }}
                 />
               ))}
@@ -119,7 +136,9 @@ function GameFlow() {
             !questions[questionIndex]?.userSelectedAnswer
           }
         >
-          Next Question
+          {!questions[questionIndex]?.userSelectedAnswer 
+          ? `Time Left ${timer} Points: ${calculateTimeBonus() * difficultyPoints()}` 
+          : `Next Question Points: ${calculateTimeBonus() * difficultyPoints()}`}
         </button>
       </div>
     </>
