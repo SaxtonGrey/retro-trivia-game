@@ -1,17 +1,5 @@
-export interface TriviaQuestion {
-  category: string;
-  type: string;
-  difficulty: string;
-  question: string;
-  correct_answer: string;
-  incorrect_answers: string[];
-  userSelectedAnswer?: string;
-}
+import { TriviaQuestion, TriviaResponse } from "./types/interfaces";
 
-interface TriviaResponse {
-  response_code: number;
-  results: TriviaQuestion[];
-}
 
 const baseUrl = "https://opentdb.com/api.php?";
 
