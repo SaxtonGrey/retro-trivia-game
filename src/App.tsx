@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Requests } from "./api";
 import { TriviaQuestion } from "./api";
+import "./App.css";
 
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -26,17 +27,19 @@ function App() {
     let timerId: number;
     if (timer > 0) {
       timerId = setInterval(() => {
-        setTimer((prevTimer) => prevTimer - 1)
-      }, 1000)
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
     }
     return () => window.clearInterval(timerId);
-  }, [timer])
+  }, [timer]);
 
   const handleAnswerSelection = (selectedAnswer: string) => {
     // Update the user's selected answer for the current question
     setQuestions((prevQuestions) =>
       prevQuestions.map((question, index) =>
-        index === questionIndex ? { ...question, userSelectedAnswer: selectedAnswer } : question
+        index === questionIndex
+          ? { ...question, userSelectedAnswer: selectedAnswer }
+          : question
       )
     );
   };
@@ -52,7 +55,7 @@ function App() {
     } else {
       return baseMultiplier;
     }
-  }
+  };
 
   const handleCheckAnswer = () => {
     // Check if the selected answer is correct and update the score
@@ -61,14 +64,16 @@ function App() {
 
     if (selectedAnswer === correctAnswer) {
       const curDifficulty: string = questions[questionIndex].difficulty;
-      if (curDifficulty === 'easy') {
-        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier())
-      } 
-      if (curDifficulty === 'medium') {
-        setScore((prevScore: number) => (prevScore + 1.5 * calculateMultiplier()))
+      if (curDifficulty === "easy") {
+        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier());
       }
-      if (curDifficulty === 'hard') {
-        setScore((prevScore: number) => (prevScore + 2 * calculateMultiplier()))
+      if (curDifficulty === "medium") {
+        setScore(
+          (prevScore: number) => prevScore + 1.5 * calculateMultiplier()
+        );
+      }
+      if (curDifficulty === "hard") {
+        setScore((prevScore: number) => prevScore + 2 * calculateMultiplier());
       }
     }
     setTimer(10);
@@ -83,24 +88,35 @@ function App() {
       <div>
         {questions.length > 0 && questionIndex < questions.length && (
           <div>
-            <p dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }} />
+            <p
+              dangerouslySetInnerHTML={{
+                __html: questions[questionIndex].question,
+              }}
+            />
             <div>
-              {[...questions[questionIndex].incorrect_answers, questions[questionIndex].correct_answer].map(
-                (answer, answerIndex) => (
-                  <button
-                    key={answerIndex}
-                    onClick={() => handleAnswerSelection(answer)}
-                    dangerouslySetInnerHTML={{ __html: answer }}
-                  />
-                )
-              )}
+              {[
+                ...questions[questionIndex].incorrect_answers,
+                questions[questionIndex].correct_answer,
+              ].map((answer, answerIndex) => (
+                <button
+                  key={answerIndex}
+                  onClick={() => handleAnswerSelection(answer)}
+                  dangerouslySetInnerHTML={{ __html: answer }}
+                />
+              ))}
             </div>
           </div>
         )}
         <p>Current Score: {score} </p>
-        <button onClick={() => {
-          handleCheckAnswer();
-        }} disabled={questionIndex === questions.length - 1 || !questions[questionIndex]?.userSelectedAnswer}>
+        <button
+          onClick={() => {
+            handleCheckAnswer();
+          }}
+          disabled={
+            questionIndex === questions.length - 1 ||
+            !questions[questionIndex]?.userSelectedAnswer
+          }
+        >
           Next Question
         </button>
       </div>
