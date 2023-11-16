@@ -5,26 +5,51 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <link rel="stylesheet" href="./css/default.css">
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
     <div class="gameboy">
-    <div class="screen"></div>
+    <div class="outter-screen">
+      <div class="inner-screen">
+        <div class="q-a-container">
+          <div class="question-container">
+            <div class="question"></div>
+          </div>
+          <div class="answer-container">
+            <div class="top-row-answers">
+              <div class="answer-a"></div>
+              <div class="answer-b"></div>
+            </div>
+            <div class="bottom-row-answers">
+              <div class="answer-c"></div>
+              <div class="answer-d"></div>
+            </div>
+        </div>
+        </div>
+      </div>
+    </div>
     <div class="controls">
       <div class="dpad">
-        <div class="d-pad">
+        <div class="d-pad container">
           <div class="up">⇧</div>
           <div class="right">⇧</div>
           <div class="down">⇧</div>
           <div class="left">⇧</div>
         </div>
         <div class="select-start">
-          <div class="select"></div>
-          <div class="start"></div>
+          <div class="select-btn"></div>
+          <div class="select-letters">SELECT</div>
+          <div class="start-btn"></div>
+          <div class="start-letters">START</div>
         </div>
-        <div class="a-b">
-          <div class="a-btn">A</div>
-          <div class="b-btn">B</div>
+        <div class="a-b-btns">
+          <div class="btn-inset">
+            <div class="a-btn"></div>
+              <div class="a-letter">A</div>
+              <div class="b-btn"></div>
+              <div class="b-letter">B</div>
+          </div>
         </div>
       </div>
     </div>
