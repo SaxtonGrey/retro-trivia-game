@@ -1,36 +1,111 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { useEffect, useState } from "react";
+import { Requests } from "./api";
+import { TriviaQuestion } from "./api";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [questionIndex, setQuestionIndex] = useState(0);
+  const [score, setScore] = useState(0);
+  const [questionLimit, setQuestionLimit] = useState(15);
+  const [difficulty, setDifficulty] = useState("mixed");
+  const [questionType, setQuestionType] = useState("multiple");
+  const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [timer, setTimer] = useState(10);
+
+  useEffect(() => {
+    Requests.getQuestions(questionLimit, difficulty, questionType)
+      .then((questions) => {
+        setQuestions(questions);
+      })
+      .catch((error) => {
+        console.error("Error fetching questions:", error);
+        // Handle or log the error appropriately in your application
+      });
+  }, []);
+
+  useEffect(() => {
+    let timerId: number;
+    if (timer > 0) {
+      timerId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1)
+      }, 1000)
+    }
+    return () => window.clearInterval(timerId);
+  }, [timer])
+
+  const handleAnswerSelection = (selectedAnswer: string) => {
+    // Update the user's selected answer for the current question
+    setQuestions((prevQuestions) =>
+      prevQuestions.map((question, index) =>
+        index === questionIndex ? { ...question, userSelectedAnswer: selectedAnswer } : question
+      )
+    );
+  };
+
+  const calculateMultiplier = () => {
+    const quickMultiplier: number = 5;
+    const calculatedMultiplier: number = timer / 8;
+    const baseMultiplier: number = 1;
+    if (timer > 8) {
+      return quickMultiplier;
+    } else if (timer < 8 && timer > 1.6) {
+      return calculatedMultiplier * quickMultiplier;
+    } else {
+      return baseMultiplier;
+    }
+  }
+
+  const handleCheckAnswer = () => {
+    // Check if the selected answer is correct and update the score
+    const selectedAnswer = questions[questionIndex].userSelectedAnswer;
+    const correctAnswer = questions[questionIndex].correct_answer;
+
+    if (selectedAnswer === correctAnswer) {
+      const curDifficulty: string = questions[questionIndex].difficulty;
+      if (curDifficulty === 'easy') {
+        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier())
+      } 
+      if (curDifficulty === 'medium') {
+        setScore((prevScore: number) => (prevScore + 1.5 * calculateMultiplier()))
+      }
+      if (curDifficulty === 'hard') {
+        setScore((prevScore: number) => (prevScore + 2 * calculateMultiplier()))
+      }
+    }
+    setTimer(10);
+    // Move to the next question if available
+    if (questionIndex < questions.length - 1) {
+      setQuestionIndex((prevIndex) => prevIndex + 1);
+    }
+  };
 
   return (
     <>
       <div>
-        <p>hello World</p>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
+        {questions.length > 0 && questionIndex < questions.length && (
+          <div>
+            <p dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }} />
+            <div>
+              {[...questions[questionIndex].incorrect_answers, questions[questionIndex].correct_answer].map(
+                (answer, answerIndex) => (
+                  <button
+                    key={answerIndex}
+                    onClick={() => handleAnswerSelection(answer)}
+                    dangerouslySetInnerHTML={{ __html: answer }}
+                  />
+                )
+              )}
+            </div>
+          </div>
+        )}
+        <p>Current Score: {score} </p>
+        <button onClick={() => {
+          handleCheckAnswer();
+        }} disabled={questionIndex === questions.length - 1 || !questions[questionIndex]?.userSelectedAnswer}>
+          Next Question
         </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
       </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
