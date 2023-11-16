@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import { Component } from "react";
 
 interface Question {
   category: string;
@@ -21,34 +21,51 @@ class Questions extends Component {
   async fetchData() {
     try {
       const numOfQuestions = 10;
-      const questionObj: Question[] = await (await fetch(`https://the-trivia-api.com/api/questions?limit=${numOfQuestions}`)).json();
+      const questionObj: Question[] = await (
+        await fetch(
+          `https://the-trivia-api.com/api/questions?limit=${numOfQuestions}`
+        )
+      ).json();
       console.log(questionObj);
 
       const shuffledQuestions: Question[] = questionObj.map((question) => {
         if (question.incorrectAnswers && question.incorrectAnswers.length > 0) {
-          question.allAnswers = [question.correctAnswer, ...question.incorrectAnswers];
+          question.allAnswers = [
+            question.correctAnswer,
+            ...question.incorrectAnswers,
+          ];
 
           for (let i = question.allAnswers.length - 1; i > 0; i--) {
             const j = Math.floor(Math.random() * (i + 1));
-            [question.allAnswers[i], question.allAnswers[j]] = [question.allAnswers[j], question.allAnswers[i]];
+            [question.allAnswers[i], question.allAnswers[j]] = [
+              question.allAnswers[j],
+              question.allAnswers[i],
+            ];
           }
 
           return question;
         } else {
-          console.error(`Error: Missing or empty incorrectAnswers for question with ID ${question.id}`);
+          console.error(
+            `Error: Missing or empty incorrectAnswers for question with ID ${question.id}`
+          );
           return {} as Question; // Handle this case best idea is a couple of preset questions just in case
         }
       });
 
-      this.setState({ questions: shuffledQuestions.filter((question) => Object.keys(question).length > 0) });
+      this.setState({
+        questions: shuffledQuestions.filter(
+          (question) => Object.keys(question).length > 0
+        ),
+      });
     } catch (error) {
-      console.error('Error fetching questions:', error);
+      console.error("Error fetching questions:", error);
     }
   }
 
   render() {
     const { questions } = this.state;
-    const firstQuestion = questions.length > 0 ? questions[0] : {} as Question;
+    const firstQuestion =
+      questions.length > 0 ? questions[0] : ({} as Question);
 
     return (
       <div>

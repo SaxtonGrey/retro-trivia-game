@@ -1,19 +1,20 @@
 import { useEffect, useState } from "react";
 import { Requests } from "./api";
 import { TriviaQuestion } from "./api";
+import "./App.css";
 
 function App() {
   const [questionIndex, setQuestionIndex] = useState(0);
-  const [questionLimit, setQuestionLimit] = useState(15);
   const [score, setScore] = useState(0);
-  const [difficulty, setDifficulty] = useState("easy");
+  const [questionLimit, setQuestionLimit] = useState(15);
+  const [difficulty, setDifficulty] = useState("mixed");
   const [questionType, setQuestionType] = useState("multiple");
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [timer, setTimer] = useState(10);
 
   useEffect(() => {
     Requests.getQuestions(questionLimit, difficulty, questionType)
       .then((questions) => {
-        console.log(questions);
         setQuestions(questions);
       })
       .catch((error) => {
@@ -21,6 +22,16 @@ function App() {
         // Handle or log the error appropriately in your application
       });
   }, []);
+
+  useEffect(() => {
+    let timerId: number;
+    if (timer > 0) {
+      timerId = setInterval(() => {
+        setTimer((prevTimer) => prevTimer - 1);
+      }, 1000);
+    }
+    return () => window.clearInterval(timerId);
+  }, [timer]);
 
   const handleAnswerSelection = (selectedAnswer: string) => {
     // Update the user's selected answer for the current question
@@ -33,16 +44,39 @@ function App() {
     );
   };
 
+  const calculateMultiplier = () => {
+    const quickMultiplier: number = 5;
+    const calculatedMultiplier: number = timer / 8;
+    const baseMultiplier: number = 1;
+    if (timer > 8) {
+      return quickMultiplier;
+    } else if (timer < 8 && timer > 1.6) {
+      return calculatedMultiplier * quickMultiplier;
+    } else {
+      return baseMultiplier;
+    }
+  };
+
   const handleCheckAnswer = () => {
     // Check if the selected answer is correct and update the score
     const selectedAnswer = questions[questionIndex].userSelectedAnswer;
     const correctAnswer = questions[questionIndex].correct_answer;
-    console.log(selectedAnswer, correctAnswer);
 
     if (selectedAnswer === correctAnswer) {
-      setScore((prevScore: number) => prevScore + 1);
+      const curDifficulty: string = questions[questionIndex].difficulty;
+      if (curDifficulty === "easy") {
+        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier());
+      }
+      if (curDifficulty === "medium") {
+        setScore(
+          (prevScore: number) => prevScore + 1.5 * calculateMultiplier()
+        );
+      }
+      if (curDifficulty === "hard") {
+        setScore((prevScore: number) => prevScore + 2 * calculateMultiplier());
+      }
     }
-
+    setTimer(10);
     // Move to the next question if available
     if (questionIndex < questions.length - 1) {
       setQuestionIndex((prevIndex) => prevIndex + 1);
@@ -78,6 +112,11 @@ function App() {
           onClick={() => {
             handleCheckAnswer();
           }}
+
+          disabled={
+            questionIndex === questions.length - 1 ||
+            !questions[questionIndex]?.userSelectedAnswer
+          }
           disabled={questionIndex === questions.length - 1}
         >
           Next Question
