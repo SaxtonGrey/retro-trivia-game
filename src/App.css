@@ -24,6 +24,7 @@
   height: 60%;
   border: 2px solid rgb(231, 231, 231);
   font-family: "Kdam Thmor Pro", sans-serif;
+  letter-spacing: 2px;
 }
 
 .selectedAnswer {
@@ -148,28 +149,6 @@
 #b-txt {
   color: #5a575e;
   font-size: 1.8rem;
-}
-
-.start-page-wrapper {
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.lb-btn-container {
-  margin-right: auto;
-  padding: 20px;
-}
-
-.title-container {
-  font-size: 2rem;
-}
-
-.start-container {
-  margin-bottom: 1rem;
-  font-size: 1.5rem;
 }
 
 @media (max-width: 600px) {

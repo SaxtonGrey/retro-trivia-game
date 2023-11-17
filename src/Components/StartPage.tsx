@@ -1,4 +1,5 @@
 import { useRetroAppContext } from "../providers/RetroAppProvider";
+import "../CSS/StartPage.css";
 
 export const StartPage = () => {
   const { currentScreen, setCurrentScreen } = useRetroAppContext();
