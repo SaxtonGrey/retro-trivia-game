@@ -71,7 +71,10 @@
 }
 
 .title-container {
+  font-size: 2rem;
 }
 
 .start-container {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
 }
