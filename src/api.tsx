@@ -16,8 +16,8 @@ export const Requests = {
       try {
         const response = await fetch(
           difficulty === 'mixed'
-          ? `${baseUrl}amount=${limit}&type=${type}`
-          : `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}`
+          ? `${baseUrl}amount=${limit}&type=${type}&category=15`
+          : `${baseUrl}amount=${limit}&difficulty=${difficulty}&type=${type}&category=15`
         );
 
         if (response.status === 429) {
