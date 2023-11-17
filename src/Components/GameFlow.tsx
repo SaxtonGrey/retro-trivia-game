@@ -8,11 +8,13 @@ const MAX_TIMER = 10;
 function GameFlow() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
   const [questionLimit, setQuestionLimit] = useState(15);
   const [difficulty, setDifficulty] = useState("mixed");
   const [questionType, setQuestionType] = useState("multiple");
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
   const [timer, setTimer] = useState(MAX_TIMER);
+  const [isEnterKeyDown, setIsEnterKeyDown] = useState(false);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(
     null
   );
@@ -40,6 +42,14 @@ function GameFlow() {
     return () => clearTimeout(timerId);
   }, [timer]);
 
+  useEffect(() => {
+    console.log('lives after update', lives);
+    if (lives === 0) {
+      console.log('game over');
+      // Here is where the game will end when you run out of lives link the leaderboards here
+      // There are two locations where it is needed
+    }
+  }, [lives])
   const handleAnswerSelection = (
     selectedAnswer: string,
     answerIndex: number
@@ -83,26 +93,42 @@ function GameFlow() {
   };
 
   const handleCheckAnswer = () => {
-    const currentQuestion = questions[questionIndex];
+    if (isEnterKeyDown) {
+      setIsEnterKeyDown(false);
+      const currentQuestion = questions[questionIndex];
 
-    if (!currentQuestion || !currentQuestion.userSelectedAnswer) {
-      return;
+      if (!currentQuestion || !currentQuestion.userSelectedAnswer) {
+        return;
+      }
+
+      const { userSelectedAnswer, correct_answer } = currentQuestion;
+      if (userSelectedAnswer === correct_answer) {
+        const difficulty = difficultyPoints();
+        setScore((prevScore) => prevScore + difficulty * calculateTimeBonus());
+      } else {
+        setLives((prevLives) => prevLives - 1);
+      }
+      setSelectedAnswerIndex(null);
+      if (questionIndex < questions.length - 1 && lives !== 0) {
+        setQuestionIndex((prevIndex) => prevIndex + 1);
+      } else {
+      //Link leaderboards with a congradulations you win completed all 50 questions
+
+      }
+      setTimer(MAX_TIMER);
     }
+  };
 
-    const { userSelectedAnswer, correct_answer } = currentQuestion;
-
-    if (userSelectedAnswer === correct_answer) {
-      const difficulty = difficultyPoints();
-      setScore((prevScore) => prevScore + difficulty * calculateTimeBonus());
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter") {
+      setIsEnterKeyDown(true);
     }
+  };
 
-    setSelectedAnswerIndex(null);
-
-    if (questionIndex < questions.length - 1) {
-      setQuestionIndex((prevIndex) => prevIndex + 1);
+  const handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (event.key === "Enter") {
+      setIsEnterKeyDown(false);
     }
-
-    setTimer(MAX_TIMER);
   };
 
   if (questions.length === 0 || questionIndex >= questions.length) {
@@ -132,6 +158,8 @@ function GameFlow() {
       <p>Current Score: {score} </p>
       <button
         onClick={handleCheckAnswer}
+        onKeyDown={handleKeyDown}
+        onKeyUp={handleKeyUp}
         disabled={!questions[questionIndex].userSelectedAnswer}
       >
         {!questions[questionIndex].userSelectedAnswer
@@ -142,6 +170,11 @@ function GameFlow() {
               calculateTimeBonus() * difficultyPoints()
             }`}
       </button>
+      <div className="lives-container">
+        <i className="fa-solid fa-heart"></i>
+        <i className="fa-solid fa-heart"></i>
+        <i className="fa-solid fa-heart"></i>
+      </div>
     </div>
   );
 }
