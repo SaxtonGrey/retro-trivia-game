@@ -106,7 +106,7 @@ function GameFlow() {
   };
 
   if (questions.length === 0 || questionIndex >= questions.length) {
-    return <p>No questions available</p>;
+    return <p>Loading...</p>;
   }
 
   return (
