@@ -94,7 +94,7 @@ function GameFlow() {
   };
 
   const handleCheckAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
-  const isMouseClick = 'type' in e && e.type === 'click';
+    const isMouseClick = "type" in e && e.type === "click";
     if (isEnterKeyDown || isMouseClick) {
       setIsEnterKeyDown(false);
       const currentQuestion = questions[questionIndex];
