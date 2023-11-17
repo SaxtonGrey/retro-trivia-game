@@ -1,12 +1,27 @@
-interface StartPageProps {
-  onClick: () => void;
-}
+import { useRetroAppContext } from "../providers/RetroAppProvider";
 
-export const StartPage: React.FC<StartPageProps> = ({ onClick }) => {
+export const StartPage = () => {
+  const { currentScreen, setCurrentScreen } = useRetroAppContext();
+
+  const handleLeaderBoardClick = () => {
+    if (currentScreen === "display-leader") {
+      setCurrentScreen("");
+    } else {
+      setCurrentScreen("display-leader");
+    }
+  };
+
   return (
     <div className="page-wrapper">
       <div className="lb-btn-container">
-        <div className="lb-btn">LeaderBoard</div>
+        <button
+          className="lb-btn"
+          onClick={() => {
+            handleLeaderBoardClick();
+          }}
+        >
+          LeaderBoard
+        </button>
       </div>
       <div className="title-container">
         <h2>Retrivia!</h2>
@@ -14,7 +29,7 @@ export const StartPage: React.FC<StartPageProps> = ({ onClick }) => {
       <div className="start-container">
         <div
           onClick={() => {
-            onClick();
+            setCurrentScreen("start-game");
           }}
         >
           Start Game
