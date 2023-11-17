@@ -12,6 +12,16 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
+
+  --gameboy-grey: #C6C1C1;
+    --outter-screen: #5A575E;
+    --inner-screen: #3C5A14;
+    --dpad: ;
+    --dpad-inset: ;
+    --a-b-btn: #980E48;
+    --select-start-btn: #5A575E;
+    --speaker-holes: ;
+    --gameboy-ink: #322F88;
 }
 
 a {
