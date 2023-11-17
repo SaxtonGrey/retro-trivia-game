@@ -5,9 +5,15 @@
   background-color: rgb(197, 197, 197);
   height: 90vh;
   width: 90vw;
+  max-width: 1000px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  margin: 1rem;
+  border-radius: 30px;
+  box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.63);
+  -webkit-box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.63);
+  -moz-box-shadow: 0px 3px 12px 3px rgba(0, 0, 0, 0.63);
 }
 
 #root {
@@ -70,8 +76,11 @@
 
 .start-select-btns {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   gap: 15px;
+  position: relative;
+  left: 40px;
+  top: 50px;
 }
 
 .start-wrapper,
@@ -97,43 +106,38 @@
   color: #5a575e;
 }
 
-.a-b-btns div {
-  width: 50px;
-  height: 50px;
-  border-radius: 2rem;
+.a-b-btns {
+  position: relative;
+  right: 2vw;
+}
+
+.a-btn-wrapper,
+.b-btn-wrapper {
+  rotate: -25deg;
+}
+
+.a-btn-wrapper {
+  position: relative;
+  left: 10px;
+}
+
+.b-btn-wrapper {
+  position: relative;
+  right: 10px;
 }
 
 #a-btn,
 #b-btn {
   background-color: #980e48;
-  position: relative;
+  width: 50px;
+  height: 50px;
+  border-radius: 2rem;
 }
 
-#a-btn {
-  right: 60px;
-}
-
-#a-txt {
-  border: rgb(197, 197, 197);
-  color: #322f88;
-  font-size: 1.8rem;
-  rotate: 320deg;
-  position: absolute;
-  right: 20px;
-  bottom: 10px;
-}
-
-#b-btn {
-  right: 130px;
-}
-
+#a-txt,
 #b-txt {
-  border: rgb(197, 197, 197);
-  color: #322f88;
+  color: #5a575e;
   font-size: 1.8rem;
-  rotate: 320deg;
-  position: absolute;
-  right: 90px;
 }
 
 .start-page-wrapper {
@@ -156,4 +160,12 @@
 .start-container {
   margin-bottom: 1rem;
   font-size: 1.5rem;
+}
+
+@media (max-width: 600px) {
+  .start-select-btns {
+    flex-direction: column;
+    gap: 30px;
+    top: 30px;
+  }
 }
