@@ -4,7 +4,7 @@ interface StartPageProps {
 
 export const StartPage: React.FC<StartPageProps> = ({ onClick }) => {
   return (
-    <div className="page-wrapper">
+    <div className="start-page-wrapper">
       <div className="lb-btn-container">
         <div className="lb-btn">LeaderBoard</div>
       </div>
