@@ -1,6 +1,5 @@
 import { TriviaQuestion, TriviaResponse } from "./types/interfaces";
 
-
 const baseUrl = "https://opentdb.com/api.php?";
 
 export const Requests = {

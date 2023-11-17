@@ -1,4 +1,8 @@
-export const StartPage = () => {
+interface StartPageProps {
+  onClick: () => void;
+}
+
+export const StartPage: React.FC<StartPageProps> = ({ onClick }) => {
   return (
     <div className="page-wrapper">
       <div className="lb-btn-container">
@@ -10,7 +14,7 @@ export const StartPage = () => {
       <div className="start-container">
         <div
           onClick={() => {
-            //load game screen component, will need to use props and react children
+            onClick();
           }}
         >
           Start Game
