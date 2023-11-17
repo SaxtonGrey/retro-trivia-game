@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { TriviaQuestion, Requests } from "../api"; // Replace with the correct path
+import { useEffect, useState } from "react";
+import { Requests } from "../api";
+import { TriviaQuestion } from "../types/interfaces";
 
 const TIME_BONUS_THRESHOLD = 5;
 const MAX_TIMER = 10;

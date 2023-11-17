@@ -1,4 +1,4 @@
-import { TriviaQuestion } from "../api";
+import { TriviaQuestion } from "../types/interfaces";
 
 export const QuestionPage = ({
   questions,
