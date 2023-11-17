@@ -1,8 +1,10 @@
 import { useState } from "react";
+import { useRetroAppContext } from "../providers/RetroAppProvider";
 
 export const GameOver = () => {
+  const { finalScore, setCurrentScreen, addPlayerToLeaderBoard } =
+    useRetroAppContext();
   const [name, setName] = useState("");
-  const [score, setScore] = useState(86); // Assuming you have a way to track the score
 
   const handleNameChange: React.ChangeEventHandler<HTMLInputElement> = (e) => {
     // Ensure only uppercase letters and limit to 3 characters
@@ -12,15 +14,15 @@ export const GameOver = () => {
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    // TODO: Add logic to submit data to the leaderboard (fetch call or other mechanism)
-    console.log(`Submitting score ${score} with name ${name}`);
-    // Reset the form or navigate to another page if needed
+    addPlayerToLeaderBoard(finalScore, name);
+    setCurrentScreen("display-leader");
+    console.log(`Submitting score ${finalScore} with name ${name}`);
   };
 
   return (
     <div className="game-over-container">
       <h1>Game Over!</h1>
-      <h3>Score: {score}</h3>
+      <h3>Score: {finalScore}</h3>
       <form onSubmit={handleSubmit}>
         <label>
           Name (3 letters, all caps):
