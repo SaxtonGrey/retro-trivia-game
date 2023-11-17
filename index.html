@@ -1,4 +1,4 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
@@ -9,51 +9,37 @@
     <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
-    <div class="gameboy">
-    <div class="outter-screen">
-      <div class="inner-screen">
-        <div class="q-a-container">
-          <div class="question-container">
-            <div class="question"></div>
-          </div>
-          <div class="answer-container">
-            <div class="top-row-answers">
-              <div class="answer-a"></div>
-              <div class="answer-b"></div>
-            </div>
-            <div class="bottom-row-answers">
-              <div class="answer-c"></div>
-              <div class="answer-d"></div>
-            </div>
+    <div id="root-container">
+      <div id="root"></div>
+      <div id="controls-container">
+        <div class="dpad">
+          <div><i class="fa-regular fa-square-caret-up"></i></div>
+          <div><i class="fa-regular fa-square-caret-right"></i></div>
+          <div><i class="fa-regular fa-square-caret-left"></i></div>
+          <div><i class="fa-regular fa-square-caret-down"></i></div>
         </div>
-        </div>
-      </div>
-    </div>
-    <div class="controls">
-      <div class="dpad">
-        <div class="d-pad container">
-          <div class="up">⇧</div>
-          <div class="right">⇧</div>
-          <div class="down">⇧</div>
-          <div class="left">⇧</div>
-        </div>
-        <div class="select-start">
-          <div class="select-btn"></div>
-          <div class="select-letters">SELECT</div>
-          <div class="start-btn"></div>
-          <div class="start-letters">START</div>
+        <div class="start-select-btns">
+          <div class="start">start</div>
+          <div class="select">select</div>
         </div>
         <div class="a-b-btns">
-          <div class="btn-inset">
-            <div class="a-btn"></div>
-              <div class="a-letter">A</div>
-              <div class="b-btn"></div>
-              <div class="b-letter">B</div>
+          <div class="a-btn-wrapper">
+            <div class="a-btn-wrapper">
+              <div id="a-btn"></div>
+              <div id="a-txt">A</div>
+            </div>
+          </div>
+          <div class="b-btn-wrapper">
+            <div id="b-btn"></div>
+            <div id="b-txt">B</div>
           </div>
         </div>
       </div>
     </div>
-  </div>
     <script type="module" src="/src/main.tsx"></script>
+    <script
+      src="https://kit.fontawesome.com/3dd79392ee.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
