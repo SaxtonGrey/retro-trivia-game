@@ -1,7 +1,8 @@
-import { useEffect, useState } from "react";
-import { Requests } from "../api";
-import { TriviaQuestion } from "../api";
-import "../App.css";
+import React, { useEffect, useState } from "react";
+import { TriviaQuestion, Requests } from "../api"; // Replace with the correct path
+
+const TIME_BONUS_THRESHOLD = 5;
+const MAX_TIMER = 10;
 
 function GameFlow() {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -10,31 +11,38 @@ function GameFlow() {
   const [difficulty, setDifficulty] = useState("mixed");
   const [questionType, setQuestionType] = useState("multiple");
   const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
-  const [timer, setTimer] = useState(10);
+  const [timer, setTimer] = useState(MAX_TIMER);
+  const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(
+    null
+  );
 
   useEffect(() => {
     Requests.getQuestions(questionLimit, difficulty, questionType)
-      .then((questions) => {
-        setQuestions(questions);
+      .then((fetchedQuestions) => {
+        setQuestions(fetchedQuestions);
       })
       .catch((error) => {
         console.error("Error fetching questions:", error);
         // Handle or log the error appropriately in your application
       });
-  }, []);
+  }, [questionLimit, difficulty, questionType]);
 
   useEffect(() => {
-    let timerId: number;
+    let timerId: NodeJS.Timeout;
+
     if (timer > 0) {
-      timerId = setInterval(() => {
+      timerId = setTimeout(() => {
         setTimer((prevTimer) => prevTimer - 1);
       }, 1000);
     }
-    return () => window.clearInterval(timerId);
+
+    return () => clearTimeout(timerId);
   }, [timer]);
 
-  const handleAnswerSelection = (selectedAnswer: string) => {
-    // Update the user's selected answer for the current question
+  const handleAnswerSelection = (
+    selectedAnswer: string,
+    answerIndex: number
+  ) => {
     setQuestions((prevQuestions) =>
       prevQuestions.map((question, index) =>
         index === questionIndex
@@ -42,87 +50,98 @@ function GameFlow() {
           : question
       )
     );
+    setSelectedAnswerIndex(answerIndex);
   };
 
-  // We can only do 50 questions so lets make the multiplier double the points
-  // if the answer is submitted before the timer is up; max score will be 100
-  const calculateMultiplier = () => {
-    const quickMultiplier: number = 5;
-    const calculatedMultiplier: number = timer / 8;
-    const baseMultiplier: number = 1;
-    if (timer > 8) {
-      return quickMultiplier;
-    } else if (timer < 8 && timer > 1.6) {
-      return calculatedMultiplier * quickMultiplier;
-    } else {
-      return baseMultiplier;
+  const calculateTimeBonus = () => {
+    return timer > 0 ? Math.min(timer, TIME_BONUS_THRESHOLD) : 0;
+  };
+
+  const difficultyPoints = () => {
+    const currentQuestion = questions[questionIndex];
+
+    if (!currentQuestion || !currentQuestion.difficulty) {
+      console.error("Invalid question or difficulty is missing");
+      return 0;
+    }
+
+    return calculatePoints(currentQuestion.difficulty);
+  };
+
+  const calculatePoints = (curDifficulty: string) => {
+    switch (curDifficulty) {
+      case "easy":
+        return 3;
+      case "medium":
+        return 4;
+      case "hard":
+        return 5;
+      default:
+        return 0;
     }
   };
 
   const handleCheckAnswer = () => {
-    // Check if the selected answer is correct and update the score
-    const selectedAnswer = questions[questionIndex].userSelectedAnswer;
-    const correctAnswer = questions[questionIndex].correct_answer;
+    const currentQuestion = questions[questionIndex];
 
-    if (selectedAnswer === correctAnswer) {
-      const curDifficulty: string = questions[questionIndex].difficulty;
-      if (curDifficulty === "easy") {
-        setScore((prevScore: number) => prevScore + 1 * calculateMultiplier());
-      }
-      if (curDifficulty === "medium") {
-        setScore(
-          (prevScore: number) => prevScore + 1.5 * calculateMultiplier()
-        );
-      }
-      if (curDifficulty === "hard") {
-        setScore((prevScore: number) => prevScore + 2 * calculateMultiplier());
-      }
+    if (!currentQuestion || !currentQuestion.userSelectedAnswer) {
+      return;
     }
-    setTimer(10);
-    // Move to the next question if available
+
+    const { userSelectedAnswer, correct_answer } = currentQuestion;
+
+    if (userSelectedAnswer === correct_answer) {
+      const difficulty = difficultyPoints();
+      setScore((prevScore) => prevScore + difficulty * calculateTimeBonus());
+    }
+
+    setSelectedAnswerIndex(null);
+
     if (questionIndex < questions.length - 1) {
       setQuestionIndex((prevIndex) => prevIndex + 1);
     }
+
+    setTimer(MAX_TIMER);
   };
 
+  if (questions.length === 0 || questionIndex >= questions.length) {
+    return <p>No questions available</p>;
+  }
+
   return (
-    <>
+    <div>
+      <p
+        dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }}
+      />
       <div>
-        {questions.length > 0 && questionIndex < questions.length && (
-          <div>
-            <p
-              dangerouslySetInnerHTML={{
-                __html: questions[questionIndex].question,
-              }}
-            />
-            <div>
-              {[
-                ...questions[questionIndex].incorrect_answers,
-                questions[questionIndex].correct_answer,
-              ].map((answer, answerIndex) => (
-                <button
-                  key={answerIndex}
-                  onClick={() => handleAnswerSelection(answer)}
-                  dangerouslySetInnerHTML={{ __html: answer }}
-                />
-              ))}
-            </div>
-          </div>
-        )}
-        <p>Current Score: {score} </p>
-        <button
-          onClick={() => {
-            handleCheckAnswer();
-          }}
-          disabled={
-            questionIndex === questions.length - 1 ||
-            !questions[questionIndex]?.userSelectedAnswer
-          }
-        >
-          Next Question
-        </button>
+        {[
+          ...questions[questionIndex].incorrect_answers,
+          questions[questionIndex].correct_answer,
+        ].map((answer, answerIndex) => (
+          <button
+            key={answerIndex}
+            onClick={() => handleAnswerSelection(answer, answerIndex)}
+            className={
+              selectedAnswerIndex === answerIndex ? "selectedAnswer" : ""
+            }
+            dangerouslySetInnerHTML={{ __html: answer }}
+          />
+        ))}
       </div>
-    </>
+      <p>Current Score: {score} </p>
+      <button
+        onClick={handleCheckAnswer}
+        disabled={!questions[questionIndex].userSelectedAnswer}
+      >
+        {!questions[questionIndex].userSelectedAnswer
+          ? `Time Left ${timer} Points: ${
+              calculateTimeBonus() * difficultyPoints()
+            }`
+          : `Next Question Points: ${
+              calculateTimeBonus() * difficultyPoints()
+            }`}
+      </button>
+    </div>
   );
 }
 
