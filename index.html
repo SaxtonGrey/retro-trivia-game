@@ -5,6 +5,8 @@
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Vite + React + TS</title>
+    <link rel="stylesheet" href="./css/default.css">
+    <link rel="stylesheet" href="./css/style.css">
   </head>
   <body>
     <div id="root-container">
@@ -17,12 +19,20 @@
           <div><i class="fa-regular fa-square-caret-down"></i></div>
         </div>
         <div class="start-select-btns">
-          <div>start</div>
-          <div>select</div>
+          <div class="start">start</div>
+          <div class="select">select</div>
         </div>
         <div class="a-b-btns">
-          <div id="a-btn">A</div>
-          <div id="b-btn">B</div>
+          <div class="a-btn-wrapper">
+            <div class="a-btn-wrapper">
+              <div id="a-btn"></div>
+              <div id="a-txt">A</div>
+            </div>
+          </div>
+          <div class="b-btn-wrapper">
+            <div id="b-btn"></div>
+            <div id="b-txt">B</div>
+          </div>
         </div>
       </div>
     </div>

@@ -35,24 +35,329 @@
   position: relative;
 }
 
+.fa-square-caret-up{
+  color: #000;
+  font-size: 3rem;
+  position: absolute;
+  left: 75px;
+  bottom: 100px;
+}
+
+.fa-square-caret-down{
+  color: #000;
+  font-size: 3rem;
+  position: absolute;
+  left: 75px;
+  bottom: 5px;
+}
+
+.fa-square-caret-right{
+  color: #000;
+  font-size: 3rem;
+  position: absolute;
+  left: 120px;
+  bottom: 50px;
+}
+
+.fa-square-caret-left{
+  color: #000;
+  font-size: 3rem;
+  position: absolute;
+  left: 30px;
+  bottom: 50px;
+}
+
 .start-select-btns {
   width: 80px;
   height: 80px;
 }
 
+.start{
+  font-size: 1.8rem;
+  rotate: 320deg;
+  position: absolute;
+  right: 800px;
+  top: 780px;
+  color: #5A575E;
+}
+
+.select{
+  font-size: 1.8rem;
+  rotate: 320deg;
+  position: absolute;
+  right: 1000px;
+  top: 780px;
+  color: #5A575E;
+}
+
 .a-b-btns div {
   width: 50px;
   height: 50px;
-  border: 1px solid black;
   border-radius: 2rem;
 }
 
 #a-btn,
 #b-btn {
-  background-color: tomato;
+  background-color: #980E48;
   position: relative;
 }
 
 #a-btn {
+  right: 60px;
+}
+
+#a-txt{
+  border: rgb(197, 197, 197);
+  color: #322F88;
+  font-size: 1.8rem;
+  rotate: 320deg;
+  position: absolute;
   right: 20px;
+  bottom: 10px;
+}
+
+#b-btn{
+  right: 130px;
+}
+
+#b-txt{
+  border: rgb(197, 197, 197);
+  color: #322F88;
+  font-size: 1.8rem;
+  rotate: 320deg;
+  position: absolute;
+  right: 90px;
+}
+
+@media screen and (max-width: 1250px){
+  .start{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 650px;
+  }
+
+  .select{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 400px;
+  }
+}
+
+@media screen and (max-width: 1030px){
+  .start{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 600px;
+  }
+
+  .select{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 350px;
+  }
+}
+
+@media screen and (max-width: 910px){
+  .start{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 500px;
+  }
+
+  .select{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 300px;
+  }
+}
+
+@media screen and (max-width: 800px){
+  .fa-square-caret-up{
+    color: #000;
+    font-size: 2.8rem;
+    position: absolute;
+    left: 40px;
+    bottom: 100px;
+  }
+  
+  .fa-square-caret-down{
+    color: #000;
+    font-size: 2.8rem;
+    position: absolute;
+    left: 40px;
+    bottom: 20px;
+  }
+  
+  .fa-square-caret-right{
+    color: #000;
+    font-size: 2.8rem;
+    position: absolute;
+    left: 80px;
+    bottom: 60px;
+  }
+  
+  .fa-square-caret-left{
+    color: #000;
+    font-size: 2.8rem;
+    position: absolute;
+    left: 5px;
+    bottom: 60px;
+  }
+
+  .start{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 450px;
+  }
+
+  .select{
+    font-size: 1.8rem;
+    top: 650px;
+    left: 250px;
+  }
+
+  #a-btn,
+  #b-btn {
+  background-color: #980E48;
+  position: relative;
+}
+
+#a-btn {
+  right: 30px;
+  height: 45px;
+  width: 45px;
+}
+
+#a-txt{
+  border: rgb(197, 197, 197);
+  color: #322F88;
+  font-size: 1.5rem;
+  rotate: 320deg;
+  position: absolute;
+  left: 10px;
+  bottom: 5px;
+}
+
+#b-btn{
+  right: 90px;
+  height: 45px;
+  width: 45px;
+}
+
+#b-txt{
+  border: rgb(197, 197, 197);
+  color: #322F88;
+  font-size: 1.5rem;
+  rotate: 320deg;
+  position: absolute;
+  right: 50px;
+}
+}
+
+@media screen and (max-width: 700px){
+
+  .start{
+    position: absolute;
+    left: 380px;
+  }
+
+  .select{
+    position: absolute;
+    left: 250px;
+  }
+}
+
+@media screen and (max-width: 620px){
+
+  .start{
+    position: absolute;
+    left: 290px;
+  }
+
+  .select{
+    position: absolute;
+    left: 180px;
+  }
+}
+
+@media screen and (max-width: 530px){
+
+  .start{
+    position: absolute;
+    left: 250px;
+  }
+
+  .select{
+    position: absolute;
+    left: 120px;
+  }
+}
+
+@media screen and (max-width: 485px){
+
+  .start{
+    position: absolute;
+    left: 250px;
+  }
+
+  .select{
+    position: absolute;
+    left: 120px;
+  }
+
+  .fa-square-caret-up{
+    color: #000;
+    font-size: 2.2rem;
+    position: absolute;
+    left: 35px;
+    bottom: 90px;
+  }
+  
+  .fa-square-caret-down{
+    color: #000;
+    font-size: 2.2rem;
+    position: absolute;
+    left: 35px;
+    bottom: 30px;
+  }
+  
+  .fa-square-caret-right{
+    color: #000;
+    font-size: 2.2rem;
+    position: absolute;
+    left: 65px;
+    bottom: 60px;
+  }
+  
+  .fa-square-caret-left{
+    color: #000;
+    font-size: 2.2rem;
+    position: absolute;
+    right: 45px;
+    bottom: 60px;
+  }
+
+  .start{
+    position: absolute;
+    left: 200px;
+    font-size: 1.6rem;
+  }
+
+  .select{
+    position: absolute;
+    left: 90px;
+    font-size: 1.6rem;
+  }
+}
+
+@media screen and (max-width: 425px){
+  .start{
+    position: absolute;
+    left: 170px;
+  }
+
+  .select{
+    position: absolute;
+    left: 100px;
+  }
 }
