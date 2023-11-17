@@ -24,7 +24,7 @@
 #controls-container {
   display: flex;
   flex-direction: row;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
   height: 30%;
 }
@@ -33,7 +33,11 @@
   width: 80px;
   height: 80px;
   position: relative;
-  margin-right: 20%;
+}
+
+.start-select-btns {
+  width: 80px;
+  height: 80px;
 }
 
 .a-b-btns div {
@@ -46,7 +50,7 @@
 #a-btn,
 #b-btn {
   background-color: tomato;
-  position: absolute;
+  position: relative;
 }
 
 #a-btn {
