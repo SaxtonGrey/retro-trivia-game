@@ -43,13 +43,13 @@ function GameFlow() {
   }, [timer]);
 
   useEffect(() => {
-    console.log('lives after update', lives);
+    console.log("lives after update", lives);
     if (lives === 0) {
-      console.log('game over');
+      console.log("game over");
       // Here is where the game will end when you run out of lives link the leaderboards here
       // There are two locations where it is needed
     }
-  }, [lives])
+  }, [lives]);
   const handleAnswerSelection = (
     selectedAnswer: string,
     answerIndex: number
@@ -112,8 +112,7 @@ function GameFlow() {
       if (questionIndex < questions.length - 1 && lives !== 0) {
         setQuestionIndex((prevIndex) => prevIndex + 1);
       } else {
-      //Link leaderboards with a congradulations you win completed all 50 questions
-
+        //Link leaderboards with a congradulations you win completed all 50 questions
       }
       setTimer(MAX_TIMER);
     }

@@ -12,7 +12,7 @@ export const StartPage = () => {
   };
 
   return (
-    <div className="page-wrapper">
+    <div className="start-page-wrapper">
       <div className="lb-btn-container">
         <button
           className="lb-btn"
