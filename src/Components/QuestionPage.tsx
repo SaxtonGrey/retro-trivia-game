@@ -15,6 +15,7 @@ export const QuestionPage = ({
   };
   return (
     <>
+    {console.log(questions)}
       {questions.map((question, index) => (
         <div key={index}>
           <p dangerouslySetInnerHTML={{ __html: question.question }} />

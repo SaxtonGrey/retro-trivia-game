@@ -172,9 +172,9 @@ function GameFlow() {
             }`}
       </button>
       <div className="lives-container">
-        <i className="fa-solid fa-heart"></i>
-        <i className="fa-solid fa-heart"></i>
-        <i className="fa-solid fa-heart"></i>
+      {Array.from({ length: lives }, (_, index) => (
+          <i key={index} className="fa-solid fa-heart"></i>
+        ))}
       </div>
     </div>
   );
