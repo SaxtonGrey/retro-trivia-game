@@ -1,0 +1,241 @@
+body {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #8fb8f7;
+    font-family: 'Orbitron', sans-serif;
+  }
+/* GAMEBOY */
+  .gameboy {
+    position: relative;
+    width: 800px;
+    height: 900px;
+    background-color:  var(--gameboy-grey);
+    border-radius: 10px 10px 60px 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+  }
+/* SCREEN */
+  .outter-screen {
+    width: 700px;
+    height: 400px;
+    margin-left: 50px;
+    margin-top: 40px;
+    background-color: var(--outter-screen);
+    position: relative;
+  }
+
+  .inner-screen{
+    width: 600px;
+    height: 325px;
+    margin-left: 50px;
+    margin-top: 40px;
+    background-color: var(--inner-screen);
+    position: absolute;
+    bottom: 50px;
+  }
+  /* QUESTIONS & ANSWERS */
+.q-a-container{
+    position: absolute;
+    top: 20px;
+    width: 100%;
+}
+
+  .question{
+    border: 2px solid black;
+    height: 50px;
+    width: 100%;
+  }
+
+  .top-row-answers{
+    display: flex;
+  }
+  
+  .bottom-row-answers{
+    display: flex;
+  }
+
+  .answer-a{
+    border: 2px solid black;
+    height: 100px;
+    width: 50%;
+    display: flex;
+  }
+
+  .answer-b{
+    border: 2px solid black;
+    height: 100px;
+    width: 50%;
+  }
+
+  .answer-c{
+    border: 2px solid black;
+    height: 100px;
+    width: 50%;
+  }
+
+  .answer-d{
+    border: 2px solid black;
+    height: 100px;
+    width: 50%;
+  }
+
+  .controls {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+  }
+  /* DPAD */
+/* BTN CONTAINER */
+  .container{
+    position: relative;
+  }
+/* DPADDIRECTION */
+  .up{
+    position: absolute;
+    top: 100px;
+    left: 100px;
+  }
+
+  .down{
+    position: absolute;
+    top: 200px;
+    left: 100px;
+    rotate: 180deg;
+  }
+
+  .right{
+    position: absolute;
+    top: 150px;
+    left: 150px;
+    rotate: 90deg;
+  }
+
+  .left{
+    position: absolute;
+    top: 150px;
+    left: 50px;
+    rotate: -90deg;
+  }
+
+  .down{
+    position: relative;
+
+  }
+
+  .dpad {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .dpad .up,
+  .dpad .right,
+  .dpad .down,
+  .dpad .left{
+    margin: 5px;
+    font-size: 40px;
+/* SELECT START */
+  }
+/* START/SELECT CONTAINER */
+  .select-start{
+    display: flex;
+    position: relative;
+  }
+/* SELECT BTN */
+  .select-start .select-btn{
+    width: 60px;
+    height: 8px;
+    border-radius: 20%;
+    background-color: #000;
+  }
+
+  .select-btn{
+    position: absolute;
+    left: 280px;
+    top: 325px;
+    rotate: 145deg;
+  }
+
+  .select-letters{
+    color: var(--gameboy-ink);
+    font-weight: 800;
+    position: absolute;
+    top: 50px;
+    left: 290px;
+    top: 340px;
+    rotate: 325deg;
+  }
+/* START BTN */
+  .select-start .start-btn{
+    width: 60px;
+    height: 8px;
+    border-radius: 20%;
+    background-color: #000;
+  }
+
+  .start-btn{
+    position: absolute;
+    left: 390px;
+    top: 325px;
+    rotate: 145deg;
+  }
+
+  .start-letters{
+    color: var(--gameboy-ink);
+    font-weight: 800;
+    position: absolute;
+    top: 50px;
+    left: 410px;
+    top: 340px;
+    rotate: 325deg;
+  }
+   /* A&B BTNS */
+/* BTN CONTAINER */
+  .a-b-btns{
+    position: relative;
+    font-weight: 700;
+  }
+/* A BTN */
+.a-b-btns .a-btn{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: var(--a-b-btn);
+    position: absolute;
+    left: 650px;
+    top: 100px;
+  }
+
+  .a-letter{
+    color: var(--gameboy-ink);
+    font-size: 30px;
+    position: absolute;
+    left: 700px;
+    top: 180px;
+    rotate: 330deg;
+  }
+/* B BTN */
+  .a-b-btns{
+    position: relative;
+  }
+
+  .a-b-btns .b-btn{
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-color: var(--a-b-btn);
+    position: absolute;
+    left: 580px;
+    top: 170px;
+  }
+
+  .b-letter{
+    color: var(--gameboy-ink);
+    font-size: 30px;
+    position: absolute;
+    left: 640px;
+    top: 240px;
+    rotate: 330deg;
+  }
