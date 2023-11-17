@@ -1,58 +1,189 @@
 #root-container {
+  max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
   text-align: center;
   background-color: rgb(197, 197, 197);
-  height: 90vh;
-  width: 90vw;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
 }
 
 #root {
   background-color: grey;
   border-radius: 20px;
   padding: 20px;
-  height: 60%;
-}
-
-.selectedAnswer {
-  background-color: green;
 }
 
 #controls-container {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
-  height: 30%;
 }
 
 .dpad {
   width: 80px;
   height: 80px;
+}
+
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  margin: 0;
+  background-color: #8fb8f7;
+  font-family: 'Orbitron', sans-serif;
+}
+/* GAMEBOY */
+.gameboy {
+  position: relative;
+  width: 800px;
+  height: 900px;
+  background-color:  var(--gameboy-grey);
+  border-radius: 10px 10px 60px 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+/* DPAD */
+/* BTN CONTAINER */
+.container{
+  position: relative;
+}
+/* DPADDIRECTION */
+.up{
+  position: absolute;
+  top: 100px;
+  left: 100px;
+}
+
+.down{
+  position: absolute;
+  top: 200px;
+  left: 100px;
+}
+
+.right{
+  position: absolute;
+  top: 150px;
+  left: 150px;
+}
+
+.left{
+  position: absolute;
+  top: 150px;
+  left: 50px;
+}
+
+.dpad {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.dpad .up,
+.dpad .right,
+.dpad .down,
+.dpad .left{
+  margin: 5px;
+  font-size: 40px;
+/* SELECT START */
+}
+/* START/SELECT CONTAINER */
+.select-start{
+  display: flex;
+  position: relative;
+}
+/* SELECT BTN */
+.select-start .select-btn{
+  width: 60px;
+  height: 8px;
+  border-radius: 20%;
+  background-color: #000;
+}
+
+.select-btn{
+  position: absolute;
+  left: 280px;
+  top: 275px;
+  rotate: 145deg;
+}
+
+.select-letters{
+  color: var(--gameboy-ink);
+  font-weight: 800;
+  position: absolute;
+  top: 50px;
+  left: 290px;
+  top: 300px;
+  rotate: 325deg;
+}
+/* START BTN */
+.select-start .start-btn{
+  width: 60px;
+  height: 8px;
+  border-radius: 20%;
+  background-color: #000;
+}
+
+.start-btn{
+  position: absolute;
+  left: 390px;
+  top: 275px;
+  rotate: 145deg;
+}
+
+.start-letters{
+  color: var(--gameboy-ink);
+  font-weight: 800;
+  position: absolute;
+  top: 50px;
+  left: 410px;
+  top: 300px;
+  rotate: 325deg;
+}
+ /* A&B BTNS */
+/* BTN CONTAINER */
+.a-b-btns{
+  position: relative;
+  font-weight: 700;
+}
+/* A BTN */
+.a-b-btns .a-btn{
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: var(--a-b-btn);
+  position: absolute;
+  left: 650px;
+  top: 100px;
+}
+
+.a-letter{
+  color: var(--gameboy-ink);
+  font-size: 30px;
+  position: absolute;
+  left: 700px;
+  top: 180px;
+  rotate: 330deg;
+}
+/* B BTN */
+.a-b-btns{
   position: relative;
 }
 
-.start-select-btns {
-  width: 80px;
-  height: 80px;
+.a-b-btns .b-btn{
+  height: 60px;
+  width: 60px;
+  border-radius: 50%;
+  background-color: var(--a-b-btn);
+  position: absolute;
+  left: 580px;
+  top: 170px;
 }
 
-.a-b-btns div {
-  width: 50px;
-  height: 50px;
-  border: 1px solid black;
-  border-radius: 2rem;
-}
-
-#a-btn,
-#b-btn {
-  background-color: tomato;
-  position: relative;
-}
-
-#a-btn {
-  right: 20px;
+.b-letter{
+  color: var(--gameboy-ink);
+  font-size: 30px;
+  position: absolute;
+  left: 640px;
+  top: 240px;
+  rotate: 330deg;
 }
