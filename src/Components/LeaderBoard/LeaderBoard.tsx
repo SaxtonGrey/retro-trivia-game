@@ -1,4 +1,4 @@
-import { Player } from "../types/interfaces";
+import { Player } from "../../types/interfaces";
 import "./LeaderBoard.css";
 import { PlayerEntry } from "./PlayerEntry";
 
