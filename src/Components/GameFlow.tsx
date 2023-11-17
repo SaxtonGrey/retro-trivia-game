@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Requests } from "../api";
 import { TriviaQuestion } from "../types/interfaces";
+import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
 
 const TIME_BONUS_THRESHOLD = 5;
 const MAX_TIMER = 10;
@@ -92,8 +93,9 @@ function GameFlow() {
     }
   };
 
-  const handleCheckAnswer = () => {
-    if (isEnterKeyDown) {
+  const handleCheckAnswer = (e: React.MouseEvent<HTMLButtonElement>) => {
+  const isMouseClick = 'type' in e && e.type === 'click';
+    if (isEnterKeyDown || isMouseClick) {
       setIsEnterKeyDown(false);
       const currentQuestion = questions[questionIndex];
 
@@ -118,14 +120,14 @@ function GameFlow() {
     }
   };
 
-  const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter") {
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter") {
       setIsEnterKeyDown(true);
     }
   };
 
-  const handleKeyUp = (event: React.KeyboardEvent<HTMLButtonElement>) => {
-    if (event.key === "Enter") {
+  const handleKeyUp = (e: React.KeyboardEvent<HTMLButtonElement>) => {
+    if (e.key === "Enter") {
       setIsEnterKeyDown(false);
     }
   };
