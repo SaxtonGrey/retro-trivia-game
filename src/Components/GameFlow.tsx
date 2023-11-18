@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Requests } from "../api";
+import { useRetroAppContext } from "../providers/RetroAppProvider";
 import { TriviaQuestion } from "../types/interfaces";
-import { LeaderBoard } from "./LeaderBoard/LeaderBoard";
 
 const TIME_BONUS_THRESHOLD = 5;
 const MAX_TIMER = 10;
@@ -19,6 +20,8 @@ function GameFlow() {
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(
     null
   );
+
+  const { setFinalScore, setCurrentScreen } = useRetroAppContext();
 
   useEffect(() => {
     Requests.getQuestions(questionLimit, difficulty, questionType)
@@ -47,8 +50,8 @@ function GameFlow() {
     console.log("lives after update", lives);
     if (lives === 0) {
       console.log("game over");
-      // Here is where the game will end when you run out of lives link the leaderboards here
-      // There are two locations where it is needed
+      setFinalScore(score);
+      setCurrentScreen("game-over");
     }
   }, [lives]);
   const handleAnswerSelection = (

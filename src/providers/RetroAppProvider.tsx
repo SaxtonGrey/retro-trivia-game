@@ -6,7 +6,7 @@ import {
   useContext,
   ReactNode,
 } from "react";
-import { getAllPlayersFromDB } from "../api/PlayerRequests";
+// import { getAllPlayersFromDB } from "../api/PlayerRequests";
 import { Player } from "../types/interfaces";
 
 interface RetroAppContextType {
@@ -31,8 +31,9 @@ export const RetroAppProvider = ({ children }: { children: ReactNode }) => {
   const [currentScreen, setCurrentScreen] = useState("");
 
   const refetchAllPlayers = async () => {
-    const playersFromDB = await getAllPlayersFromDB();
-    setAllPlayers(playersFromDB);
+    // const playersFromDB = //await getAllPlayersFromDB();
+    // setAllPlayers(playersFromDB);
+    setAllPlayers([] as Player[]);
   };
 
   const addPlayerToLeaderBoard = (score: number, name: string) => {
