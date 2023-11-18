@@ -1,18 +1,17 @@
 // this needs to be changed based on where we are updating the real db
 const API_CONFIG = {
-  baseURL: "http://localhost:3000",
+  baseURL: "http://localhost:5000",
 };
 
 
 // adding new player score to the leaderboard 
-import { Player } from "../types/interfaces";
-export const addPlayerToDB = ({ name, score }: Player) => {
+export const addPlayerToDB = ( name: string, score: number) => {
   const body = JSON.stringify({
     name,
     score,
   });
 
-  return fetch(API_CONFIG.baseURL + "/playerScores/", {
+  return fetch(API_CONFIG.baseURL + "/players/", {
     method: "POST",
     headers: {
       ["Content-Type"]: "application/json",
@@ -21,8 +20,9 @@ export const addPlayerToDB = ({ name, score }: Player) => {
   });
 };
 
+//get all the players from the database
 export const getAllPlayersFromDB = () => {
-  return fetch(API_CONFIG.baseURL + "/playerScores/").then((response) => {
+  return fetch(API_CONFIG.baseURL + "/players/").then((response) => {
     return response.json();
   });
 }

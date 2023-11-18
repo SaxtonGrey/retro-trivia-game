@@ -6,12 +6,11 @@ import {
   useContext,
   ReactNode,
 } from "react";
-// import { getAllPlayersFromDB } from "../api/PlayerRequests";
+import { addPlayerToDB } from "../api/PlayerRequests";
+import { getAllPlayersFromDB } from "../api/PlayerRequests";
 import { Player } from "../types/interfaces";
 
 interface RetroAppContextType {
-  user: Player | null;
-  setUser: React.Dispatch<React.SetStateAction<Player | null>>;
   finalScore: number;
   setFinalScore: React.Dispatch<React.SetStateAction<number>>;
   allPlayers: Player[];
@@ -25,19 +24,19 @@ const RetroAppContext = createContext<RetroAppContextType>(
 );
 
 export const RetroAppProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<Player | null>(null);
   const [finalScore, setFinalScore] = useState(0);
   const [allPlayers, setAllPlayers] = useState([] as Player[]);
   const [currentScreen, setCurrentScreen] = useState("");
 
   const refetchAllPlayers = async () => {
-    // const playersFromDB = //await getAllPlayersFromDB();
-    // setAllPlayers(playersFromDB);
-    setAllPlayers([] as Player[]);
+    console.log("in the refetch");
+    const playersFromDB = await getAllPlayersFromDB();
+    setAllPlayers(playersFromDB);
   };
 
-  const addPlayerToLeaderBoard = (score: number, name: string) => {
-    console.log(score, name);
+  const addPlayerToLeaderBoard = async (score: number, name: string) => {
+    await addPlayerToDB(name, score);
+    refetchAllPlayers();
   };
 
   useEffect(() => {
@@ -47,8 +46,6 @@ export const RetroAppProvider = ({ children }: { children: ReactNode }) => {
   return (
     <RetroAppContext.Provider
       value={{
-        user,
-        setUser,
         finalScore,
         setFinalScore,
         allPlayers,

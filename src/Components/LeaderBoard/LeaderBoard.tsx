@@ -1,33 +1,9 @@
 import { useRetroAppContext } from "../../providers/RetroAppProvider";
-import { Player } from "../../types/interfaces";
 import "./LeaderBoard.css";
 import { PlayerEntry } from "./PlayerEntry";
 
-const playerArray: Player[] = [
-  {
-    name: "Ab ",
-    score: 1000,
-  },
-  {
-    name: "Player 2",
-    score: 800,
-  },
-  {
-    name: "Player 3",
-    score: 600,
-  },
-  {
-    name: "Player 4",
-    score: 500,
-  },
-  {
-    name: "Player 5",
-    score: 400,
-  },
-];
-
 export const LeaderBoard = () => {
-  const { setCurrentScreen } = useRetroAppContext();
+  const { setCurrentScreen, allPlayers } = useRetroAppContext();
 
   return (
     <div className="start-page-wrapper">
@@ -43,7 +19,7 @@ export const LeaderBoard = () => {
       </div>
       <div className="leaderboard">
           <div className="header">Retro Leaderboard</div>
-          {playerArray.map((player, index) => {
+          {allPlayers.map((player, index) => {
             return <PlayerEntry key={index} position={index} player={player} />;
           })}
         </div>

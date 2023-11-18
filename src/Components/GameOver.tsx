@@ -16,7 +16,6 @@ export const GameOver = () => {
     e.preventDefault();
     addPlayerToLeaderBoard(finalScore, name);
     setCurrentScreen("display-leader");
-    console.log(`Submitting score ${finalScore} with name ${name}`);
   };
 
   return (

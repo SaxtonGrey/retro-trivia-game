@@ -10,7 +10,7 @@ export const PlayerEntry = ({
   const { name, score } = player;
   return (
     <div className="entry">
-      <span className="rank">{position}. </span>
+      <span className="rank">{position+1}. </span>
       <span className="name">{name}</span>
       <span className="score">{score}</span>
     </div>
