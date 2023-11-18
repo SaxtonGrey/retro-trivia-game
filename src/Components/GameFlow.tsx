@@ -1,11 +1,16 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 import { useEffect, useState } from "react";
 import { Requests } from "../api";
 import { useRetroAppContext } from "../providers/RetroAppProvider";
 import { TriviaQuestion } from "../types/interfaces";
+import "../CSS/GameFlow.css";
 
 const TIME_BONUS_THRESHOLD = 5;
-const MAX_TIMER = 10;
+const MAX_TIMER = 15;
+
+// Extend TriviaQuestion type to include shuffledAnswers
+interface ExtendedTriviaQuestion extends TriviaQuestion {
+  shuffledAnswers: string[];
+}
 
 function GameFlow() {
   const [questionIndex, setQuestionIndex] = useState(0);
@@ -14,7 +19,7 @@ function GameFlow() {
   const [questionLimit, setQuestionLimit] = useState(15);
   const [difficulty, setDifficulty] = useState("mixed");
   const [questionType, setQuestionType] = useState("multiple");
-  const [questions, setQuestions] = useState<TriviaQuestion[]>([]);
+  const [questions, setQuestions] = useState<ExtendedTriviaQuestion[]>([]);
   const [timer, setTimer] = useState(MAX_TIMER);
   const [isEnterKeyDown, setIsEnterKeyDown] = useState(false);
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState<number | null>(
@@ -23,15 +28,40 @@ function GameFlow() {
 
   const { setFinalScore, setCurrentScreen } = useRetroAppContext();
 
+  const heartIcons = Array.from({ length: lives }, (_, index) => (
+    <i key={index} className="fa-solid fa-heart"></i>
+  ));
+
   useEffect(() => {
-    Requests.getQuestions(questionLimit, difficulty, questionType)
-      .then((fetchedQuestions) => {
-        setQuestions(fetchedQuestions);
-      })
-      .catch((error) => {
+    const fetchQuestions = async () => {
+      try {
+        const fetchedQuestions = await Requests.getQuestions(
+          questionLimit,
+          difficulty,
+          questionType
+        );
+
+        // Shuffle the answers once when questions are fetched
+        const questionsWithShuffledAnswers: ExtendedTriviaQuestion[] =
+          fetchedQuestions.map((question) => {
+            const answers = [
+              ...question.incorrect_answers,
+              question.correct_answer,
+            ];
+            return {
+              ...question,
+              shuffledAnswers: shuffleArray(answers),
+            };
+          });
+
+        setQuestions(questionsWithShuffledAnswers);
+      } catch (error) {
         console.error("Error fetching questions:", error);
         // Handle or log the error appropriately in your application
-      });
+      }
+    };
+
+    fetchQuestions();
   }, [questionLimit, difficulty, questionType]);
 
   useEffect(() => {
@@ -54,6 +84,7 @@ function GameFlow() {
       setCurrentScreen("game-over");
     }
   }, [lives]);
+
   const handleAnswerSelection = (
     selectedAnswer: string,
     answerIndex: number
@@ -116,8 +147,6 @@ function GameFlow() {
       setSelectedAnswerIndex(null);
       if (questionIndex < questions.length - 1 && lives !== 0) {
         setQuestionIndex((prevIndex) => prevIndex + 1);
-      } else {
-        //Link leaderboards with a congradulations you win completed all 50 questions
       }
       setTimer(MAX_TIMER);
     }
@@ -140,15 +169,13 @@ function GameFlow() {
   }
 
   return (
-    <div>
+    <div className="game-flow-container">
       <p
+        className="question"
         dangerouslySetInnerHTML={{ __html: questions[questionIndex].question }}
       />
-      <div>
-        {[
-          ...questions[questionIndex].incorrect_answers,
-          questions[questionIndex].correct_answer,
-        ].map((answer, answerIndex) => (
+      <div className="answer-box">
+        {questions[questionIndex].shuffledAnswers.map((answer, answerIndex) => (
           <button
             key={answerIndex}
             onClick={() => handleAnswerSelection(answer, answerIndex)}
@@ -174,13 +201,19 @@ function GameFlow() {
               calculateTimeBonus() * difficultyPoints()
             }`}
       </button>
-      <div className="lives-container">
-        <i className="fa-solid fa-heart"></i>
-        <i className="fa-solid fa-heart"></i>
-        <i className="fa-solid fa-heart"></i>
-      </div>
+      <div className="lives-container">{heartIcons}</div>
     </div>
   );
 }
 
 export default GameFlow;
+
+// Helper function to shuffle an array
+function shuffleArray(array: string[]) {
+  const shuffledArray = [...array];
+  for (let i = shuffledArray.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [shuffledArray[i], shuffledArray[j]] = [shuffledArray[j], shuffledArray[i]];
+  }
+  return shuffledArray;
+}

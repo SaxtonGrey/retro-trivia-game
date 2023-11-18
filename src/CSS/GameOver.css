@@ -1,0 +1,30 @@
+.game-over-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.game-over-container h3 {
+  color: #25d9df;
+  font-size: 1.3rem;
+}
+
+.game-over-form {
+  display: flex;
+  flex-direction: column;
+  width: 300px;
+  margin: auto;
+}
+
+.game-over-form label {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 15px;
+  gap: 10px;
+  font-size: 1.7rem;
+}
+
+.game-over-form label input {
+  height: 40px;
+  font-size: 30px;
+  text-align: center;
+}

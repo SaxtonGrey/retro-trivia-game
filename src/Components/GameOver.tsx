@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useRetroAppContext } from "../providers/RetroAppProvider";
+import "../CSS/GameOver.css";
 
 export const GameOver = () => {
   const { finalScore, setCurrentScreen, addPlayerToLeaderBoard } =
@@ -22,9 +23,9 @@ export const GameOver = () => {
     <div className="game-over-container">
       <h1>Game Over!</h1>
       <h3>Score: {finalScore}</h3>
-      <form onSubmit={handleSubmit}>
+      <form className="game-over-form" onSubmit={handleSubmit}>
         <label>
-          Name (3 letters, all caps):
+          Enter Name:
           <input
             type="text"
             value={name}
