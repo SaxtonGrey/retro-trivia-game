@@ -1,9 +1,9 @@
 import { useRetroAppContext } from "../../providers/RetroAppProvider";
 import "./LeaderBoard.css";
-import { PlayerEntry } from "./PlayerEntry";
+// import { PlayerEntry } from "./PlayerEntry";
 
 export const LeaderBoard = () => {
-  const { setCurrentScreen, allPlayers } = useRetroAppContext();
+  const { setCurrentScreen } = useRetroAppContext();
 
   return (
     <div className="start-page-wrapper">

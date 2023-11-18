@@ -16,9 +16,9 @@ function GameFlow() {
   const [questionIndex, setQuestionIndex] = useState(0);
   const [score, setScore] = useState(0);
   const [lives, setLives] = useState(3);
-  const [questionLimit, setQuestionLimit] = useState(15);
-  const [difficulty, setDifficulty] = useState("mixed");
-  const [questionType, setQuestionType] = useState("multiple");
+  const questionLimit = 15;
+  const difficulty = "mixed";
+  const questionType = "multiple";
   const [questions, setQuestions] = useState<ExtendedTriviaQuestion[]>([]);
   const [timer, setTimer] = useState(MAX_TIMER);
   const [isEnterKeyDown, setIsEnterKeyDown] = useState(false);
